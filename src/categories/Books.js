@@ -3,36 +3,36 @@ import { db } from '../firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
-function Gifts() {
-  const [giftArr, setGiftArr] = useState([]);
+function Books() {
+  const [bookArr, setBookArr] = useState([]);
 
   useEffect(() => {
     const articlesRef = collection(db, 'articles');
-    const q = query(articlesRef, where('tags', 'array-contains', 'gift'));
-    const getGiftArr = async () => {
+    const q = query(articlesRef, where('tags', 'array-contains', 'book'));
+    const getBookArr = async () => {
       const querySnap = await getDocs(q);
-      let allGifts = [];
+      let allBooks = [];
       querySnap.forEach((doc) => {
         let docNameArr = doc.id.split(' ');
         if (docNameArr.length > 1) {
-          allGifts.push(docNameArr.join('-'));
+          allBooks.push(docNameArr.join('-'));
         } else {
-          allGifts.push(doc.id);
+          allBooks.push(doc.id);
         }
       });
-      setGiftArr(allGifts);
+      setBookArr(allBooks);
     };
-    getGiftArr();
+    getBookArr();
   }, []);
 
   return (
-    <div className="Gifts">
-      <h1>Gifts</h1>
+    <div className="Books">
+      <h1>Books</h1>
       <ul>
-        {giftArr.map((gift) => (
-          <li key={gift}>
-            <Link to={`/${gift}`}>
-              {gift[0].toUpperCase() + gift.slice(1).split('-').join(' ')}
+        {bookArr.map((book) => (
+          <li key={book}>
+            <Link to={`/${book}`}>
+              {book[0].toUpperCase() + book.slice(1).split('-').join(' ')}
             </Link>
           </li>
         ))}
@@ -41,4 +41,4 @@ function Gifts() {
   );
 }
 
-export default Gifts;
+export default Books;

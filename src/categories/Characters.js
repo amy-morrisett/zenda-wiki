@@ -27,9 +27,10 @@ function Characters() {
 
   return (
     <div className="Characters">
+      <h1>Characters</h1>
       <ul>
         {charArr.map((char) => (
-          <li>
+          <li key={char}>
             <Link to={`/${char}`}>{char.split('-').join(' ')}</Link>
           </li>
         ))}

@@ -48,12 +48,12 @@ function Locations() {
   }, []);
 
   return (
-    <div className="Gifts">
+    <div className="Locations">
       <h1>Locations</h1>
       <h3>All Locations</h3>
       <ul>
         {locationArr.map((location) => (
-          <li>
+          <li key={location}>
             <Link to={`/${location}`}>
               {location[0].toUpperCase() +
                 location.slice(1).split('-').join(' ')}
@@ -64,7 +64,7 @@ function Locations() {
       <h3>Planets</h3>
       <ul>
         {planetArr.map((location) => (
-          <li>
+          <li key={location}>
             <Link to={`/${location}`}>
               {location[0].toUpperCase() +
                 location.slice(1).split('-').join(' ')}
@@ -75,7 +75,7 @@ function Locations() {
       <h3>Moons</h3>
       <ul>
         {moonArr.map((location) => (
-          <li>
+          <li key={location}>
             <Link to={`/${location}`}>
               {location[0].toUpperCase() +
                 location.slice(1).split('-').join(' ')}
