@@ -13,6 +13,18 @@ function Categories() {
         <li>
           <Link to="/characters">Characters</Link>
         </li>
+        <li>
+          <Link to="/locations">Locations</Link>
+        </li>
+        <li>
+          <Link to="/books">Books</Link>
+        </li>
+        <li>
+          <Link to="/plants">Plants</Link>
+        </li>
+        <li>
+          <Link to="/animals-and-insects">Animals and Insects</Link>
+        </li>
       </ul>
     </div>
   );

@@ -9,6 +9,7 @@ import Categories from './Categories';
 
 import Gifts from './categories/Gifts';
 import Characters from './categories/Characters';
+import Locations from './categories/Locations';
 
 import ArticleTemplate from './ArticleTemplate';
 
@@ -42,6 +43,7 @@ function RouteList() {
 
         <Route path="/gifts" element={<Gifts />} />
         <Route path="/characters" element={<Characters />} />
+        <Route path="/locations" element={<Locations />} />
 
         {articleArr.map((articleName) => (
           <Route
@@ -49,6 +51,7 @@ function RouteList() {
             element={
               <ArticleTemplate article={articleName.split('-').join(' ')} />
             }
+            key={articleName}
           />
         ))}
       </Routes>
