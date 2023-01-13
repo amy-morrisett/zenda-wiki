@@ -30,7 +30,7 @@ function Gifts() {
       <ul>
         {giftArr.map((gift) => (
           <li>
-            <Link to={gift}>
+            <Link to={`/${gift}`}>
               {gift[0].toUpperCase() + gift.slice(1).split('-').join(' ')}
             </Link>
           </li>
