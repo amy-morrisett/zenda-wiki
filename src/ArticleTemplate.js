@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
 import { updateDoc, doc, getDoc } from 'firebase/firestore';
+import GiftUsers from './GiftUsers';
 
 const ArticleTemplate = (props) => {
   const [articleName, setArticleName] = useState('');
   const [articleText, setArticleText] = useState('');
+  const [articleTags, setArticleTags] = useState([]);
 
   useEffect(() => {
     const articleDoc = doc(db, 'articles', props.article);
@@ -12,6 +14,9 @@ const ArticleTemplate = (props) => {
       const articleDocSnap = await getDoc(articleDoc);
       if (articleDocSnap.data().text) {
         setArticleText(articleDocSnap.data().text);
+      }
+      if (articleDocSnap.data().tags.length) {
+        setArticleTags(articleDocSnap.data().tags);
       }
       const capitalizedName = props.article
         .split(' ')
@@ -45,6 +50,15 @@ const ArticleTemplate = (props) => {
           Submit
         </button>
       </form>
+      <div>
+        {articleTags.includes('gift') ? <GiftUsers gift={props.article} /> : ''}
+      </div>
+      <h4>Article Tags</h4>
+      <ul>
+        {articleTags.map((tag) => (
+          <li key={tag}>{tag}</li>
+        ))}
+      </ul>
     </div>
   );
 };
