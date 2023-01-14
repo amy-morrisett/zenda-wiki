@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { db } from './firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 
 import Home from './Home';
 
@@ -15,9 +15,11 @@ import Plants from './categories/Plants';
 import AnimalsAndInsects from './categories/AnimalsAndInsects';
 
 import ArticleTemplate from './ArticleTemplate';
+import CategoryTemplate from './CategoryTemplate';
 
 function RouteList() {
   const [articleArr, setArticleArr] = useState([]);
+  const [tagArr, setTagArr] = useState([]);
 
   useEffect(() => {
     const articlesRef = collection(db, 'articles');
@@ -37,6 +39,24 @@ function RouteList() {
     getArticleArr();
   }, []);
 
+  useEffect(() => {
+    const tagsDoc = doc(db, 'tags', 'categories');
+    const getTagCategories = async () => {
+      const tagDocSnap = await getDoc(tagsDoc);
+      let allTagArr = [];
+      Object.keys(tagDocSnap.data()).forEach((key) => {
+        if (tagDocSnap.data()[key].length) {
+          tagDocSnap.data()[key].forEach((elem) => {
+            allTagArr.push(elem);
+          });
+        }
+        allTagArr.push(key);
+      });
+      setTagArr(allTagArr);
+    };
+    getTagCategories();
+  }, []);
+
   return (
     <div>
       <Routes>
@@ -44,12 +64,12 @@ function RouteList() {
 
         <Route path="/categories" element={<Categories />} />
 
-        <Route path="/gifts" element={<Gifts />} />
+        {/* <Route path="/gifts" element={<Gifts />} />
         <Route path="/characters" element={<Characters />} />
         <Route path="/locations" element={<Locations />} />
         <Route path="/books" element={<Books />} />
         <Route path="/plants" element={<Plants />} />
-        <Route path="/animals-and-insects" element={<AnimalsAndInsects />} />
+        <Route path="/animals-and-insects" element={<AnimalsAndInsects />} /> */}
 
         {articleArr.map((articleName) => (
           <Route
@@ -58,6 +78,14 @@ function RouteList() {
               <ArticleTemplate article={articleName.split('-').join(' ')} />
             }
             key={articleName}
+          />
+        ))}
+
+        {tagArr.map((tag) => (
+          <Route
+            path={`${tag}`}
+            element={<CategoryTemplate category={tag.split('-').join(' ')} />}
+            key={tag}
           />
         ))}
       </Routes>

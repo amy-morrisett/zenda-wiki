@@ -32,8 +32,8 @@ const GiftUsers = (props) => {
       <p>Characters who have {props.gift}:</p>
       <ul>
         {charArr.map((char) => (
-          <li>
-            <Link to={`/characters/${char}`}>{char.split('-').join(' ')}</Link>
+          <li key={char}>
+            <Link to={`/${char}`}>{char.split('-').join(' ')}</Link>
           </li>
         ))}
       </ul>

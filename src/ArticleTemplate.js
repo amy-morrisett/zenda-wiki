@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
 import { updateDoc, doc, getDoc } from 'firebase/firestore';
 import GiftUsers from './GiftUsers';
+import { Link } from 'react-router-dom';
 
 const ArticleTemplate = (props) => {
   const [articleName, setArticleName] = useState('');
@@ -41,6 +42,12 @@ const ArticleTemplate = (props) => {
   }
   return (
     <div>
+      <div>
+        <Link to="/">Return Home</Link>
+      </div>
+      <div>
+        <Link to="/categories">Return to Categories</Link>
+      </div>
       <h1>{articleName}</h1>
       <p>{articleText}</p>
       <p>Edit the article here!</p>
@@ -54,11 +61,11 @@ const ArticleTemplate = (props) => {
         {articleTags.includes('gift') ? <GiftUsers gift={props.article} /> : ''}
       </div>
       <h4>Article Tags</h4>
-      <ul>
-        {articleTags.map((tag) => (
-          <li key={tag}>{tag}</li>
-        ))}
-      </ul>
+      {articleTags.map((tag) => (
+        <li key={tag}>
+          <Link to={`/${tag}`}>{tag.split('-').join(' ')}</Link>
+        </li>
+      ))}
     </div>
   );
 };
