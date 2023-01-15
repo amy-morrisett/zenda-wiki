@@ -83,8 +83,12 @@ const CategoryTemplate = (props) => {
       allArticleTags += `-${largerCategory}`;
     }
     allArticleTags += `-${props.category}`;
+    allArticleTags = allArticleTags.split('-');
+    if (allArticleTags[0] === '') {
+      allArticleTags.shift();
+    }
     const articleDoc = doc(db, 'articles', articleName);
-    setDoc(articleDoc, { text: articleText, tags: allArticleTags.split('-') });
+    setDoc(articleDoc, { text: articleText, tags: allArticleTags });
   }
   function handleNewSubCategory(evt) {
     if (evt.target.value) {

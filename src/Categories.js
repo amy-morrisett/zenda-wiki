@@ -14,11 +14,12 @@ function Categories() {
       const tagDocSnap = await getDoc(tagsDoc);
       let allTagObj = {};
       for (let key in tagDocSnap.data()) {
-        allTagObj[key] = [];
+        allTagObj[key.split(' ').join('-')] = [];
         tagDocSnap.data()[key].forEach((elem) => {
-          allTagObj[key].push(elem);
+          allTagObj[key.split(' ').join('-')].push(elem.split(' ').join('-'));
         });
       }
+      console.log(allTagObj);
       setTagObj(allTagObj);
     };
     getTagCategories();
@@ -30,7 +31,6 @@ function Categories() {
       updateDoc(tagsDoc, { [newTagName]: [] });
     } else {
       const tagDocSnap = await getDoc(tagsDoc);
-      //console.log(tagDocSnap.data()[newTagLargerCategory]);
       let subcategoryArr = tagDocSnap
         .data()
         [newTagLargerCategory].concat([newTagName]);
@@ -84,11 +84,14 @@ function Categories() {
           ))}
           <option value="none">none; create a new larger category</option>
         </select>
-        <input
-          type="text"
-          value={newTagName}
-          onChange={(e) => setNewTagName(e.target.value)}
-        />
+        <div>
+          <input
+            type="text"
+            placeholder="category name"
+            value={newTagName}
+            onChange={(e) => setNewTagName(e.target.value)}
+          />
+        </div>
         <button type="submit" onClick={handleClick}>
           Submit
         </button>
