@@ -78,8 +78,8 @@ function Categories() {
         >
           <option value="" disabled hidden></option>
           {Object.keys(tagObj).map((largerCat) => (
-            <option key={largerCat} value={largerCat}>
-              {largerCat}
+            <option key={largerCat} value={largerCat.split('-').join(' ')}>
+              {largerCat.split('-').join(' ')}
             </option>
           ))}
           <option value="none">none; create a new larger category</option>
