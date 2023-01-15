@@ -19,7 +19,6 @@ function Categories() {
           allTagObj[key.split(' ').join('-')].push(elem.split(' ').join('-'));
         });
       }
-      console.log(allTagObj);
       setTagObj(allTagObj);
     };
     getTagCategories();

@@ -69,7 +69,7 @@ function RouteList() {
 
         {tagArr.map((tag) => (
           <Route
-            path={`${tag}`}
+            path={`${tag.split(' ').join('-')}`}
             element={<CategoryTemplate category={tag.split('-').join(' ')} />}
             key={tag}
           />
