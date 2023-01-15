@@ -30,7 +30,12 @@ const SubCategory = (props) => {
 
   return (
     <div>
-      <h4>{props.category}:</h4>
+      <h4>
+        <Link to={`/${props.category.split(' ').join('-')}`}>
+          {props.category}
+        </Link>
+        :
+      </h4>
       <ul>
         {articleArr.map((article) => (
           <li key={article}>

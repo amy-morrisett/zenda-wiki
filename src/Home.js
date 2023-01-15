@@ -25,7 +25,7 @@ function Home() {
   }
   function handleClick() {
     const articleDoc = doc(db, 'articles', articleName);
-    setDoc(articleDoc, { text: articleText, tags: articleTags.split(' ') });
+    setDoc(articleDoc, { text: articleText, tags: articleTags.split('-') });
   }
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -56,7 +56,7 @@ function Home() {
         <div>
           <input
             type="text"
-            placeholder="tags -- separate with a space"
+            placeholder="tags -- separate with a dash"
             value={articleTags}
             onChange={handleArticleTags}
           />

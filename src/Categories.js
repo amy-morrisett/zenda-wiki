@@ -1,4 +1,3 @@
-//TODO: add option for user to create a new tag (make sure to account for sub-categories)
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
 import { getDoc, doc, updateDoc } from 'firebase/firestore';
@@ -31,7 +30,7 @@ function Categories() {
       updateDoc(tagsDoc, { [newTagName]: [] });
     } else {
       const tagDocSnap = await getDoc(tagsDoc);
-      console.log(tagDocSnap.data()[newTagLargerCategory]);
+      //console.log(tagDocSnap.data()[newTagLargerCategory]);
       let subcategoryArr = tagDocSnap
         .data()
         [newTagLargerCategory].concat([newTagName]);
@@ -78,8 +77,10 @@ function Categories() {
           onChange={(e) => setNewTagLargerCategory(e.target.value)}
         >
           <option value="" disabled hidden></option>
-          {Object.keys(tagObj).map((key) => (
-            <option value={key}>{key}</option>
+          {Object.keys(tagObj).map((largerCat) => (
+            <option key={largerCat} value={largerCat}>
+              {largerCat}
+            </option>
           ))}
           <option value="none">none; create a new larger category</option>
         </select>

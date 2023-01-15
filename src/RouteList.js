@@ -40,10 +40,10 @@ function RouteList() {
       for (let key in tagDocSnap.data()) {
         if (tagDocSnap.data()[key].length) {
           tagDocSnap.data()[key].forEach((elem) => {
-            allTagArr.push(elem);
+            allTagArr.push(elem.split(' ').join('-'));
           });
         }
-        allTagArr.push(key);
+        allTagArr.push(key.split(' ').join('-'));
       }
       setTagArr(allTagArr);
     };
