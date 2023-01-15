@@ -78,12 +78,9 @@ function Categories() {
           onChange={(e) => setNewTagLargerCategory(e.target.value)}
         >
           <option value="" disabled hidden></option>
-          <option value="character">character</option>
-          <option value="location">location</option>
-          <option value="gift">gift</option>
-          <option value="book">book</option>
-          <option value="plant">plant</option>
-          <option value="insect">insect</option>
+          {Object.keys(tagObj).map((key) => (
+            <option value={key}>{key}</option>
+          ))}
           <option value="none">none; create a new larger category</option>
         </select>
         <input
