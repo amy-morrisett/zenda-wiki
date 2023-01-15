@@ -22,7 +22,6 @@ const CategoryTemplate = (props) => {
   const [articleName, setArticleName] = useState('');
   const [articleText, setArticleText] = useState('');
   const [otherTags, setOtherTags] = useState('');
-  const [articleTags, setArticleTags] = useState('');
 
   useEffect(() => {
     const articlesRef = collection(db, 'articles');
@@ -85,11 +84,11 @@ const CategoryTemplate = (props) => {
       allArticleTags += `-${largerCategory}`;
     }
     allArticleTags += `-${props.category}`;
-    setArticleTags(allArticleTags);
+    //setArticleTags(allArticleTags);
     console.log(allArticleTags);
     console.log(allArticleTags.split('-'));
     const articleDoc = doc(db, 'articles', articleName);
-    setDoc(articleDoc, { text: articleText, tags: articleTags.split('-') });
+    setDoc(articleDoc, { text: articleText, tags: allArticleTags.split('-') });
   }
   function handleSubmit(evt) {
     evt.preventDefault();
