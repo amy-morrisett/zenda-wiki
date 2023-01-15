@@ -37,14 +37,14 @@ function RouteList() {
     const getTagCategories = async () => {
       const tagDocSnap = await getDoc(tagsDoc);
       let allTagArr = [];
-      Object.keys(tagDocSnap.data()).forEach((key) => {
+      for (let key in tagDocSnap.data()) {
         if (tagDocSnap.data()[key].length) {
           tagDocSnap.data()[key].forEach((elem) => {
             allTagArr.push(elem);
           });
         }
         allTagArr.push(key);
-      });
+      }
       setTagArr(allTagArr);
     };
     getTagCategories();
