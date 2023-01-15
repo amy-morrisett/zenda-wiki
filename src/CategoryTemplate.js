@@ -1,5 +1,4 @@
-//TODO: finish category template, move all current category pages here
-//TODO: add option for user to create a new page with this tag
+//TODO: add option for user to create a new page with this tag (make sure to account for sub-categories)
 import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
 import {
@@ -11,7 +10,7 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-// import SubCategory from './SubCategory';
+import SubCategory from './SubCategory';
 
 const CategoryTemplate = (props) => {
   const [articleArr, setArticleArr] = useState([]);
@@ -64,14 +63,16 @@ const CategoryTemplate = (props) => {
           </li>
         ))}
       </ul>
-      {/* <div>
-        <h4>Subcategories:</h4>
-        {subCategoryArr.length
-          ? subCategoryArr.map((subcategory) => (
-              <SubCategory category={subcategory} />
-            ))
-          : ''}
-      </div> */}
+      {subCategoryArr.length ? (
+        <div>
+          <h2>Subcategories:</h2>
+          {subCategoryArr.map((subcategory) => (
+            <SubCategory key={subcategory} category={subcategory} />
+          ))}
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

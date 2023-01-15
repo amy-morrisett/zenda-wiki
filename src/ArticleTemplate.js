@@ -1,3 +1,4 @@
+//TODO: add option for user to add tags to the article
 import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
 import { updateDoc, doc, getDoc } from 'firebase/firestore';

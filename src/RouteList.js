@@ -7,13 +7,6 @@ import Home from './Home';
 
 import Categories from './Categories';
 
-import Gifts from './categories/Gifts';
-import Characters from './categories/Characters';
-import Locations from './categories/Locations';
-import Books from './categories/Books';
-import Plants from './categories/Plants';
-import AnimalsAndInsects from './categories/AnimalsAndInsects';
-
 import ArticleTemplate from './ArticleTemplate';
 import CategoryTemplate from './CategoryTemplate';
 
@@ -63,13 +56,6 @@ function RouteList() {
         <Route path="/" element={<Home />} />
 
         <Route path="/categories" element={<Categories />} />
-
-        {/* <Route path="/gifts" element={<Gifts />} />
-        <Route path="/characters" element={<Characters />} />
-        <Route path="/locations" element={<Locations />} />
-        <Route path="/books" element={<Books />} />
-        <Route path="/plants" element={<Plants />} />
-        <Route path="/animals-and-insects" element={<AnimalsAndInsects />} /> */}
 
         {articleArr.map((articleName) => (
           <Route
