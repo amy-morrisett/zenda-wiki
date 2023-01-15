@@ -6,6 +6,7 @@ import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 import Home from './Home';
 
 import Categories from './Categories';
+import AllArticles from './AllArticles';
 
 import ArticleTemplate from './ArticleTemplate';
 import CategoryTemplate from './CategoryTemplate';
@@ -57,6 +58,8 @@ function RouteList() {
 
         <Route path="/categories" element={<Categories />} />
 
+        <Route path="/all-articles" element={<AllArticles />} />
+
         {articleArr.map((articleName) => (
           <Route
             path={`${articleName}`}
@@ -69,7 +72,7 @@ function RouteList() {
 
         {tagArr.map((tag) => (
           <Route
-            path={`${tag.split(' ').join('-')}`}
+            path={`${tag}`}
             element={<CategoryTemplate category={tag.split('-').join(' ')} />}
             key={tag}
           />

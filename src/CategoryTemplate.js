@@ -49,7 +49,6 @@ const CategoryTemplate = (props) => {
     const tagsDoc = doc(db, 'tags', 'categories');
     const getSubCategories = async () => {
       const tagDocSnap = await getDoc(tagsDoc);
-      console.log(props.category, 'props.category');
       if (tagDocSnap.data()[props.category]) {
         setIsSubCategory(false);
         if (tagDocSnap.data()[props.category].length) {
@@ -118,6 +117,9 @@ const CategoryTemplate = (props) => {
       </div>
       <div>
         <Link to="/categories">Return to Categories</Link>
+      </div>
+      <div>
+        <Link to="/all-articles">All Articles</Link>
       </div>
       <h1>Articles with tag '{props.category}':</h1>
       <ul>

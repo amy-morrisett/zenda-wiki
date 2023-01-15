@@ -49,6 +49,9 @@ const ArticleTemplate = (props) => {
       <div>
         <Link to="/categories">Return to Categories</Link>
       </div>
+      <div>
+        <Link to="/all-articles">All Articles</Link>
+      </div>
       <h1>{articleName}</h1>
       <p>{articleText}</p>
       <p>Edit the article here!</p>

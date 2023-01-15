@@ -45,6 +45,9 @@ function Categories() {
       <div>
         <Link to="/">Return Home</Link>
       </div>
+      <div>
+        <Link to="/all-articles">All Articles</Link>
+      </div>
       <h1>Categories</h1>
       <ul>
         {Object.keys(tagObj).map((tag) => (

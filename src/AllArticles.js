@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
-import { setDoc, doc } from 'firebase/firestore';
+import { getDocs, collection, doc, setDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
-function Home() {
+const AllArticles = () => {
+  const [articleArr, setArticleArr] = useState([]);
   const [articleName, setArticleName] = useState('');
   const [articleText, setArticleText] = useState('');
   const [articleTags, setArticleTags] = useState('');
+
+  useEffect(() => {
+    const articlesRef = collection(db, 'articles');
+    const getArticleArr = async () => {
+      const articleRefSnap = await getDocs(articlesRef);
+      let allArticles = [];
+      articleRefSnap.forEach((doc) => {
+        let docNameArr = doc.id.split(' ');
+        if (docNameArr.length > 1) {
+          allArticles.push(docNameArr.join('-'));
+        } else {
+          allArticles.push(doc.id);
+        }
+      });
+      setArticleArr(allArticles);
+    };
+    getArticleArr();
+  }, []);
 
   function handleArticleName(evt) {
     if (evt.target.value) {
@@ -32,14 +51,21 @@ function Home() {
   }
 
   return (
-    <div className="Home">
-      <p>Welcome to the first ever Zenda Wiki!</p>
+    <div>
       <div>
-        <Link to="/categories">Categories</Link>
+        <Link to="/">Return Home</Link>
       </div>
       <div>
-        <Link to="/all-articles">All Articles</Link>
+        <Link to="/categories">Return to Categories</Link>
       </div>
+      <h1>All Articles:</h1>
+      <ul>
+        {articleArr.map((article) => (
+          <li key={article}>
+            <Link to={`/${article}`}>{article.split('-').join(' ')}</Link>
+          </li>
+        ))}
+      </ul>
       <p>Add a new article here!</p>
       <form onSubmit={handleSubmit}>
         <div>
@@ -72,6 +98,6 @@ function Home() {
       </form>
     </div>
   );
-}
+};
 
-export default Home;
+export default AllArticles;
