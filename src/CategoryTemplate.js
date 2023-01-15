@@ -42,7 +42,9 @@ const CategoryTemplate = (props) => {
     const tagsDoc = doc(db, 'tags', 'categories');
     const getSubCategories = async () => {
       const tagDocSnap = await getDoc(tagsDoc);
-      setSubCategoryArr(tagDocSnap.data()[props.category]);
+      tagDocSnap.data()[props.category].length
+        ? setSubCategoryArr(tagDocSnap.data()[props.category])
+        : setSubCategoryArr([]);
     };
     getSubCategories();
   }, [props.category]);
@@ -67,7 +69,7 @@ const CategoryTemplate = (props) => {
         <div>
           <h2>Subcategories:</h2>
           {subCategoryArr.map((subcategory) => (
-            <SubCategory key={subcategory} category={subcategory} />
+            <SubCategory category={subcategory} />
           ))}
         </div>
       ) : (
