@@ -1,5 +1,3 @@
-//TODO: add option for user to create a new page with this tag (make sure to account for sub-categories)
-//TODO: add option for user to create a new subcategory (but only if this is a larger category lol)
 import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
 import {
@@ -10,6 +8,7 @@ import {
   doc,
   getDoc,
   setDoc,
+  updateDoc,
 } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import SubCategory from './SubCategory';
@@ -22,6 +21,7 @@ const CategoryTemplate = (props) => {
   const [articleName, setArticleName] = useState('');
   const [articleText, setArticleText] = useState('');
   const [otherTags, setOtherTags] = useState('');
+  const [newSubCategory, setNewSubCategory] = useState('');
 
   useEffect(() => {
     const articlesRef = collection(db, 'articles');
@@ -77,18 +77,31 @@ const CategoryTemplate = (props) => {
       setArticleText(evt.target.value);
     }
   }
-  function handleClick() {
+  function handleNewArticleClick() {
     let allArticleTags = otherTags;
     if (isSubCategory) {
-      //console.log('this should not show up for insect, animal, gift, etc.');
       allArticleTags += `-${largerCategory}`;
     }
     allArticleTags += `-${props.category}`;
-    //setArticleTags(allArticleTags);
-    console.log(allArticleTags);
-    console.log(allArticleTags.split('-'));
     const articleDoc = doc(db, 'articles', articleName);
     setDoc(articleDoc, { text: articleText, tags: allArticleTags.split('-') });
+  }
+  function handleNewSubCategory(evt) {
+    if (evt.target.value) {
+      setNewSubCategory(evt.target.value);
+    }
+  }
+  async function handleNewSubCategoryClick() {
+    const tagsDoc = doc(db, 'tags', 'categories');
+    const tagsDocSnap = await getDoc(tagsDoc);
+    let categoriesObj = tagsDocSnap.data();
+    let currentCategoryArr = tagsDocSnap
+      .data()
+      [props.category].concat([newSubCategory]);
+    await updateDoc(tagsDoc, {
+      ...categoriesObj,
+      [props.category]: currentCategoryArr,
+    });
   }
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -116,6 +129,20 @@ const CategoryTemplate = (props) => {
           {subCategoryArr.map((subcategory) => (
             <SubCategory key={subcategory} category={subcategory} />
           ))}
+          <p>Add a new subcategory for this tag here!</p>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input
+                type="text"
+                placeholder="subcategory"
+                value={newSubCategory}
+                onChange={handleNewSubCategory}
+              />
+            </div>
+            <button type="submit" onClick={handleNewSubCategoryClick}>
+              Submit
+            </button>
+          </form>
         </div>
       ) : (
         ''
@@ -146,7 +173,7 @@ const CategoryTemplate = (props) => {
             onChange={(e) => setOtherTags(e.target.value)}
           />
         </div>
-        <button type="submit" onClick={handleClick}>
+        <button type="submit" onClick={handleNewArticleClick}>
           Submit
         </button>
       </form>
